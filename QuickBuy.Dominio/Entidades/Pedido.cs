@@ -1,12 +1,11 @@
 ﻿using QuickBuy.Dominio.ObjetoDeValor;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Security.Principal;
+using System.Linq;
 
 namespace QuickBuy.Dominio.Entidades
 {
-    public class Pedido
+    public class Pedido : Entidade
     {
         public int Id { get; set; }
         public DateTime DataPedido { get; set; }
@@ -23,5 +22,23 @@ namespace QuickBuy.Dominio.Entidades
 
         //Deve ter ao menos 1 item
         public ICollection<ItemPedido> ItensPedido { get; set; }
+
+        public override void Validate()
+        {
+            LimparMensagemValidacao();
+
+            if(!ItensPedido.Any())
+            {
+                AdicionarCritica("Crítica - Pedido não pode ficar sem item de Pedido");
+            }
+            if(string.IsNullOrEmpty(CEP))
+            {
+                AdicionarCritica("Crítica - CEP deve estar preenchido");
+            }
+            if (FormaPagamentoId == 0)
+            {
+                AdicionarCritica("Crítica - Forma de pagamento não foi informada");
+            }
+        }
     }
 }
