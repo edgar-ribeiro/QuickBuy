@@ -11,7 +11,7 @@ namespace QuickBuy.Dominio.Entidades
         public string SobreNome { get; set; }
 
         //Um usuario pode ter nenhum ou muitos
-        public ICollection<Pedido> Pedidos { get; set; }
+        public virtual ICollection<Pedido> Pedidos { get; set; }//Virtual para o BD atualizar quando acionado
 
         public override void Validate()
         {
